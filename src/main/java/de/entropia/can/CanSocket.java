@@ -85,14 +85,14 @@ public final class CanSocket implements Closeable {
 
 		String osType = System.getProperty("os.arch");
 		final String path;
-		if (osType.matches("arm")){
-			path = "/de/entropia/can/lib/linux-arm/lib" + fileName + ".so";     
-		} else if (osType.matches("x86")) {
-			path = "/de/entropia/can/lib/linux-32/lib" + fileName + ".so";     
-		} else if (osType.matches("amd64")) {
-			path = "/de/entropia/can/lib/linux-64/lib" + fileName + ".so";
+		if (osType.equalsIgnoreCase("arm")){
+			path = "/lib/linux-arm/lib" + fileName + ".so";     
+		} else if (osType.equalsIgnoreCase("x86")) {
+			path = "/lib/linux-32/lib" + fileName + ".so";     
+		} else if (osType.equalsIgnoreCase("amd64")) {
+			path = "/lib/linux-64/lib" + fileName + ".so";
 		} else {
-			path = "/de/entropia/can/lib/linux-arm64/lib" + fileName + ".so";
+			path = "/lib/linux-arm64/lib" + fileName + ".so";
 		}
 
 		// Obtain filename from path

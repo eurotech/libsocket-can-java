@@ -1,0 +1,10 @@
+libsocket-can-java - 1.0.0
+
+Release Date: May 2022
+
+Description:
+  Fork of the de.entropia:libsocket-can-java:1.0.0 with support for the following architectures:
+  - x86
+  - x86_64
+  - armv7hf
+  - aarch64

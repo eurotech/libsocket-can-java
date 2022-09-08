@@ -1,6 +1,9 @@
-libsocket-can-java - 1.0.0
+libsocket-can-java - 1.0.1
 
-Release Date: May 2022
+Release Date: September 2022
+
+Changes:
+  Fixed receive not working on kernel 5.4+
 
 Description:
   Fork of the de.entropia:libsocket-can-java:1.0.0 with support for the following architectures:

@@ -186,12 +186,20 @@ JNIEXPORT void JNICALL Java_de_entropia_can_CanSocket__1sendFrame
 	}
 }
 
+// kernel 5.4+ recvfrom will return the size of this structure
+// as addrlen instead of sizeof(struct sockaddr_can) for CAN_RAW sockets
+struct sockaddr_can_min {
+	__kernel_sa_family_t _unused;
+	// this is the only field the code is interested in
+	int can_ifindex;
+};
+
 JNIEXPORT jobject JNICALL Java_de_entropia_can_CanSocket__1recvFrame
 (JNIEnv *env, jclass obj, jint fd)
 {
 	const int flags = 0;
 	ssize_t nbytes;
-	struct sockaddr_can addr;
+	struct sockaddr_can_min addr;
 	socklen_t len = sizeof(addr);
 	struct can_frame frame;
 
@@ -199,7 +207,7 @@ JNIEXPORT jobject JNICALL Java_de_entropia_can_CanSocket__1recvFrame
 	memset(&frame, 0, sizeof(frame));
 	nbytes = recvfrom(fd, &frame, sizeof(frame), flags,
 			  reinterpret_cast<struct sockaddr *>(&addr), &len);
-	if (len != sizeof(addr)) {
+	if (len < sizeof(addr)) {
 		throwIllegalArgumentException(env, "illegal AF_CAN address");
 		return NULL;
 	}
